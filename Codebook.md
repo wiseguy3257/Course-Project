@@ -1,0 +1,1 @@
+All variables are commented in code.
