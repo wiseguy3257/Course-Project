@@ -69,6 +69,16 @@ for(i in 1:561){
   }
 }
 extract <- extract[,-1] #remove "dummy" 1st column
+xtrct <- cbind(extract,data[,562],data[,563]) #add back in "activities" and "person" columns
+colnames(xtrct)[81] <- "Activity"; colnames(xtrct)[82] <- "Person"
 
-write.table(extract,file = "tidy.txt",row.name=FALSE) #save output to file
+#tidy data set
+spl.act <- split(xtrct,xtrct$Individual) #split data by activity
+spl.person <- split(xtrct,xtrct$Person) # split data by person
+
+avg.act <- colmeans(spl.act) #average each column by activity
+avg.person <- colmeans(spl.person) #average each column by person
+
+tidy <- rbind(avg.act,avg.person)
+write.table(tidy,file = "tidy.txt",row.name=FALSE) #save output to file
 
